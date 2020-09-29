@@ -23,3 +23,4 @@ crate-type = ["cdylib", "rlib"]
 tracing = {version = "0.1", features = ["attributes"]}
 tracing-subscriber = {version = "0.2", features = ["registry"]}
 wasm-bindgen = {version = "0.2"}
+chrono = { version = "^0.4", features = ["wasmbind"] }
