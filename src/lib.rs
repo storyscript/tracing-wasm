@@ -296,13 +296,13 @@ impl<S: Subscriber + for<'a> LookupSpan<'a>> Layer<S> for WASMLayer {
                     .and_then(|file| meta.line().map(|ln| format!("{}:{}", file, ln)))
                     .unwrap_or_default();
                 let timestamp = if self.config.log_time {
-                    chrono::Local::now().format("%a %d %T%.f").to_string()
+                    chrono::Local::now().format("%a %d %T%.f ").to_string()
                 } else {
                     String::new()
                 };
                 if self.config.use_console_color {
                     log4(
-                        &format!("{} %c{}%c {}%c{}", timestamp, level, origin, recorder),
+                        &format!("{}%c{}%c {}%c{}", timestamp, level, origin, recorder),
                         match *level {
                             tracing::Level::TRACE => "color: dodgerblue; background: #444",
                             tracing::Level::DEBUG => "color: lawngreen; background: #444",
@@ -314,7 +314,7 @@ impl<S: Subscriber + for<'a> LookupSpan<'a>> Layer<S> for WASMLayer {
                         "color: inherit",
                     );
                 } else {
-                    log1(&format!("{} {} {}{}", timestamp, level, origin, recorder));
+                    log1(&format!("{}{} {}{}", timestamp, level, origin, recorder));
                 }
             }
             if self.config.report_logs_in_timings {
